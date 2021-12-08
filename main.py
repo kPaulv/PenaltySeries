@@ -47,17 +47,12 @@ def prob_no_success(n, p):
 # probability of less than n successes
 def prob_less(n, p, s, nn):
     sp = 0
-    # for i in range(n - 1):
-    # sp += pow(p, i)
     count = n
     t = 1
     sp += pow(1 - p, n)
     while count - t > 0:
         sp += prob_equals(count - t, p) * prob_no_success(t, p)
         t += 1
-
-    # sp = prob_equals(n - 1, p) * prob_no_success(1, p) +
-
     return sp
 
 
@@ -97,25 +92,22 @@ def prob_win_a(pa, pb, sa, sb, n):
     p_win_section *= p_section
     # A team wins if it wins first section or additional section
     p_total = p + p_win_section
-    # nn = first_series
 
     print(p_total)
 
 
 print("Enter values. ")
 print("Enter probability of successful penalty for team A: ")
-Pa = int(input())
+Pa = float(input())
 print("Enter probability of successful penalty for team B: ")
-Pb = int(input())
+Pb = float(input())
 print("Enter team A score: ")
-Sa = int(input())
+Sa = float(input())
 print("Enter team B score: ")
-Sb = int(input())
+Sb = float(input())
 print("Enter played penalty amount: ")
-N = int(input())
-# prob_win_a(Pa, Pb, Sa, Sb, N)
+N = float(input())
 # penalty series
 total_num = 5
 n = 5
-# print(less(4, 5, Pa))
 prob_win_a(Pa, Pb, Sa, Sb, N)
