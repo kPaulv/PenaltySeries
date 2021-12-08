@@ -102,11 +102,17 @@ def prob_win_a(pa, pb, sa, sb, n):
     print(p_total)
 
 
-Pa = 0.65
-Pb = 0.45
-Sa = 0
-Sb = 0
-N = 0
+print("Enter values. ")
+print("Enter probability of successful penalty for team A: ")
+Pa = int(input())
+print("Enter probability of successful penalty for team B: ")
+Pb = int(input())
+print("Enter team A score: ")
+Sa = int(input())
+print("Enter team B score: ")
+Sb = int(input())
+print("Enter played penalty amount: ")
+N = int(input())
 # prob_win_a(Pa, Pb, Sa, Sb, N)
 # penalty series
 total_num = 5
