@@ -61,8 +61,13 @@ def prob_less(n, p, s, nn):
     return sp
 
 
-def success(n, p):
-    return pow(p, n)
+def success(n, total_num, p):
+    res = 1
+    if n == 0:
+        res = pow(1 - p, total_num)
+    else:
+        res *= pow(p, n) * pow(1 - p, total_num - n)
+    return res
 
 
 def less(n, total_num, p):
@@ -83,8 +88,8 @@ def prob_win_a(pa, pb, sa, sb, n):
     p_section = 0
     # A team wins in 5-penalty section
     while nn > 0:
-        p += success(nn, pa) * less(nn, first_series, pb)
-        p_section += success(nn, pa) * success(nn, pb)
+        p += success(nn, first_series, pa) * less(nn, first_series, pb)
+        p_section += success(nn, first_series, pa) * success(nn, first_series, pb)
         nn -= 1
     # A team wins in additional section
     p_win_section = (pa * (1 - pb)) / (pa * (1 - pb) + pb * (1 - pa))
