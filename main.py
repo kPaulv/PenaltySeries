@@ -110,4 +110,5 @@ N = float(input())
 # penalty series
 total_num = 5
 n = 5
+print("Probability of team a winning penalty series: ")
 prob_win_a(Pa, Pb, Sa, Sb, N)
