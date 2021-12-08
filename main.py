@@ -65,37 +65,36 @@ def success(n, p):
     return pow(p, n)
 
 
-def less(n, p):
-    s = pow(1 - p, n)
-    c = n - 1
-    while c > 0:
-        s += pow(p, c) * pow(1 - p, n - c)
-        c -= 1
+def less(n, total_num, p):
+    s = 0
+    # 0 success
+    s += pow(1 - p, total_num)
+    for i in range(n - 1):
+        s += pow(p, i + 1) * pow(1 - p, total_num - (i + 1))
     return s
 
 
 # probability of team A winning 5 penalty series
 def prob_win_a(pa, pb, sa, sb, n):
     first_series = 5
-    nn = n
+    nn = 5
     p = 0
-    while first_series - sa > 0 or first_series - sb > 0:
-        # p += prob_success(first_series, pa, sa, n) * prob_less(first_series, pb, sb, n)
-        p += success(first_series, pa) * less(first_series, pb)
-        first_series -= 1
-        nn += 1
+    # prob of add. section
+    p_section = 0
+    # A team wins in 5-penalty section
+    while nn > 0:
+        p += success(nn, pa) * less(nn, first_series, pb)
+        p_section += success(nn, pa) * success(nn, pb)
+        nn -= 1
+    # A team wins in additional section
+    p_win_section = (pa * (1 - pb)) / (pa * (1 - pb) + pb * (1 - pa))
+    # Probability of starting additional section and A team winning it
+    p_win_section *= p_section
+    # A team wins if it wins first section or additional section
+    p_total = p + p_win_section
+    # nn = first_series
 
-    p = (pow(0.65, 5) * (pow(0.55, 5) + 0.45 * pow(0.55, 4) + pow(0.45, 2) * pow(0.55, 3) + pow(0.45, 3) * pow(0.55, 2) +
-                     pow(0.45, 4) * pow(0.55, 1))) + (pow(0.65, 4) * (pow(0.55, 5) + 0.45 * pow(0.55, 4) + pow(0.45, 2)
-                                                                      * pow(0.55, 3) + pow(0.45, 3) * pow(0.55, 2))) + \
-    (pow(0.65, 3) * (pow(0.55, 5) + 0.45 * pow(0.55, 4) + pow(0.45, 2) * pow(0.55, 3))) + \
-    (pow(0.65, 2) * (pow(0.55, 5) + 0.45 * pow(0.55, 4))) + (0.65 * (pow(0.55, 5)))
-    '''
-    p = prob_success(5, pa) * prob_less(5, pb) + prob_success(4, pa) * prob_less(4, pb) + \
-        prob_success(3, pa) * prob_less(3, pb) + prob_success(2, pa) * prob_less(2, pb) + \
-        prob_success(1, pa) * prob_no_success(5, pb)
-    '''
-    print(p)
+    print(p_total)
 
 
 Pa = 0.65
@@ -103,4 +102,9 @@ Pb = 0.45
 Sa = 0
 Sb = 0
 N = 0
+# prob_win_a(Pa, Pb, Sa, Sb, N)
+# penalty series
+total_num = 5
+n = 5
+# print(less(4, 5, Pa))
 prob_win_a(Pa, Pb, Sa, Sb, N)
